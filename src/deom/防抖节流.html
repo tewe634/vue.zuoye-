@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">
+  <button id="btn">点我节流</button>
+  <script>
+  // 防抖 触发最后一次
+    let ipt = document.querySelector('input');
+    let t = null // 设置一个计时器
+    ipt.oninput = function(){
+      if (t !== null) {
+          clearTimeout(t)
+      }
+      t = setTimeout(() => {
+        console.log(this.value);
+      },500)
+    }
+    
+    // 节流 减少触发的频率
+    let btn = document.querySelector('#btn')
+    let isfals = null // 节流阀
+    btn.onclick = function(){
+      if(isfals) {
+        return  // 如果不为空就代表间隔事件还没到
+      }
+       isfals = setTimeout(() =>{
+          open.call()
+          isfals = null // 清空节流阀方便下次开启延时器
+        },3000)
+    }
+    function open() {
+      console.log('节流成功')
+    }
+  </script>
+</body>
+</html>
