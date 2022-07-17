@@ -91,9 +91,13 @@ export default {
   },
   computed:{
     all(){
-      return this.goodList.reduce((pre,current) => {
-        return pre += (current.price* current.num)
-      },0)
+        let a = 0
+      this.goodList.forEach(item => {
+        if (item.checked) {
+         a += item.num * item.price
+        }
+      })
+      return a
     },
    isAll(){
     let num = this.goodList.reduce((pre,current) => {
