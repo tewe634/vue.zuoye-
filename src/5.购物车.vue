@@ -11,7 +11,7 @@
       <thead>
         <tr>
           <th>
-            <input type="checkbox" v-model="title"  @change="cal" :checked="isAll" /> <span>全选</span>
+            <input type="checkbox"  /> <span>全选</span>
           </th>
           <th>名称</th>
           <th>价格</th>
@@ -26,7 +26,7 @@
         :obj="item"
         :index="index"
         @delect="delect"
-        :title="title"
+       
         />
       </tbody>
       <tfoot>
@@ -73,7 +73,7 @@ export default {
           checked: false,
         },
       ],
-      title: ""
+      
     };
   },
   components:{
@@ -84,30 +84,16 @@ export default {
     delect(index) {
       this.goodList.splice(index,1)
     },
-    cal(){
-      this.goodList.forEach(item => item.checked = this.title)
-    },
-   
+    to(){
+      this.done = !this.done
+    }
   },
   computed:{
     all(){
       return this.goodList.reduce((pre,current) => {
         return pre += (current.price* current.num)
       },0)
-    },
-   isAll(){
-    let num = this.goodList.reduce((pre,current) => {
-      return pre += (current.checked)
-     },0)
-       if(num == this.goodList.length){
-        this.title = true
-       } else {
-        this.title = false
-       }
-      return this.title
-   }
-
-  },
- 
+    }
+  }
 };
 </script>

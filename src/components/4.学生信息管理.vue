@@ -92,6 +92,7 @@ export default {
          this.name = "";
         this.age = 0;
         this.checked = ""; 
+        this.isShow = false
       }
     },
     // 删除

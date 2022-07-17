@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td><input type="checkbox" ></td>
+    <td><input type="checkbox" :checked="obj.checked" @change="done" ></td>
     <td>{{obj.name}}</td>
     <td>{{obj.price}}</td>
     <td>
@@ -16,10 +16,10 @@
 <script>
 export default {
     name:'shopping',
-    props:['obj','delect','index'],
+    props:['obj','delect','index','title'],
     data() {
       return {
-       
+        
       }
     },
     methods: {
@@ -36,6 +36,9 @@ export default {
       del(index) {
         this.$emit('delect',index)
       },
+      done() {
+          this.obj.checked = !this.obj.checked
+      }
     },
   
 }
