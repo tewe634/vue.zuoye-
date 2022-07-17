@@ -89,6 +89,9 @@ export default {
             item.age = this.age;
           }
         });
+         this.name = "";
+        this.age = 0;
+        this.checked = ""; 
       }
     },
     // 删除
