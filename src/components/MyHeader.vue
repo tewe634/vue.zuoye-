@@ -12,6 +12,7 @@ export default {
       user:''
     }
   },
+  props:['getBooks'],
   methods: {
     onSubmit(){
       if (this.user.trim() == '') {
@@ -19,9 +20,16 @@ export default {
         return alert('请输入正确的搜索')
       }
       this.$emit('searchBook',this.user)
-      this.user = ''
+      
     }
   },
+  watch:{
+    user(val){
+      if (val.trim() == '') {
+        this.getBooks()
+      }
+    }
+  }
 };
 </script>
 

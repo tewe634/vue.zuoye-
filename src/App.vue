@@ -2,6 +2,7 @@
   <div id="app">
   <MyHeader
   @searchBook="searchBook"
+  :getBooks="getBooks"
   ></MyHeader>
   <MyBody :list="list"
     @delectObj="delectObj"
@@ -44,8 +45,9 @@ export default {
         return  item
       } else {
         return []
-      }
+      }  
       })
+    
     },
     postBook(bookname,author,publisher){
         this.$axios({
