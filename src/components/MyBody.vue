@@ -26,7 +26,7 @@
 
     <p v-if="isshow">没有搜索到内容</p>
   </div>
-</template>
+</template> 
 
 <script>
 export default {
