@@ -14,6 +14,10 @@ import MyUserInfo from "./views/MyUserInfo.vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 const routes = [
+{
+  path:'/',
+  redirect:'/myGoodsList'
+},
   {
     path: "/myGoodsList",
     component: MyGoodsList,

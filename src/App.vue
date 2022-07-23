@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <MyHeader :title="'tarbar案例'" :color="'skyblue'"></MyHeader>
-  
-      
+     <div style="margin-top:45px">
      <router-view></router-view>
+     </div>
     <MyTabBar :list="tabList" @toggleObj="toggleObj" ></MyTabBar>
   </div>
 </template>
@@ -11,17 +11,13 @@
 <script>
 import MyHeader from "@/components/MyHeader.vue";
 import MyTabBar from "@/components/MyTabBar.vue";
-import myGoodsList from '@/views/MyGoodsList.vue'
-import myGoodsSearch from '@/views/MyGoodsSearch.vue'
-import myUserInfo from '@/views/MyUserInfo.vue'
+
 export default {
   name: "App",
   components: {
     MyTabBar,
     MyHeader,
-    myGoodsList,
-    myGoodsSearch,
-    myUserInfo
+
   },
   data() {
     return {
@@ -42,8 +38,7 @@ export default {
           componentName: "myUserInfo",
         },
       ],
-      // adderss:'myGoodsList',
-      Cname:'myGoodsList'
+      
     };
   },
   methods: {
@@ -51,7 +46,7 @@ export default {
      this.$router.push({
       path:`/${obj.componentName}` 
     })
-    this.Cname = obj.componentName;
+
     },
 
   },
