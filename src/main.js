@@ -15,26 +15,26 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 const routes = [
   {
-    path:'/',
-    redirect:'myGoodsList'
-  },
-  {
-    path: "myGoodsList",
+    path: "/myGoodsList",
     component: MyGoodsList,
   },
   {
-    path: "myGoodsSearch",
+    path: "/myGoodsSearch",
     component: MyGoodsSearch,
   },
   {
-    path: "myUserInfo",
+    path: "/myUserInfo",
     component: MyUserInfo,
   },
-]
+];
 
 const router = new VueRouter({
   routes,
 });
+const VueRouterPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(to) {
+  return VueRouterPush.call(this, to).catch((err) => err);
+};
 new Vue({
   router,
   render: (h) => h(App),

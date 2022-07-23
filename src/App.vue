@@ -1,25 +1,27 @@
 <template>
   <div id="app">
     <MyHeader :title="'tarbar案例'" :color="'skyblue'"></MyHeader>
-    <div>
-      <router-link to="/myGoodsList" v-if="'myGoodsList' == adderss "></router-link>
-      <router-link to="myGoodsSearch" v-if="'myGoodsSearch' == adderss "></router-link>
-      <router-link to="myUserInfo" v-if="'myUserInfo' == adderss "></router-link>
-      <!-- <router-link to="/myGoodsSearch"></router-link>
-    <router-link to="/myUserInfo"></router-link> -->
-    </div>
-    <MyTabBar :list="tabList" @toggleObj="toggleObj"></MyTabBar>
+  
+      
+     <router-view></router-view>
+    <MyTabBar :list="tabList" @toggleObj="toggleObj" ></MyTabBar>
   </div>
 </template>
 
 <script>
 import MyHeader from "@/components/MyHeader.vue";
 import MyTabBar from "@/components/MyTabBar.vue";
+import myGoodsList from '@/views/MyGoodsList.vue'
+import myGoodsSearch from '@/views/MyGoodsSearch.vue'
+import myUserInfo from '@/views/MyUserInfo.vue'
 export default {
   name: "App",
   components: {
     MyTabBar,
     MyHeader,
+    myGoodsList,
+    myGoodsSearch,
+    myUserInfo
   },
   data() {
     return {
@@ -40,14 +42,18 @@ export default {
           componentName: "myUserInfo",
         },
       ],
-      adderss:'myGoodsList',
+      // adderss:'myGoodsList',
+      Cname:'myGoodsList'
     };
   },
   methods: {
     toggleObj(obj) {
-      this.adderss = obj.componentName
+     this.$router.push({
+      path:`/${obj.componentName}` 
+    })
+    this.Cname = obj.componentName;
     },
-   
+
   },
  
 };

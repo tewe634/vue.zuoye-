@@ -22,7 +22,7 @@ export default {
   methods: {
     toggle(item,index){
       this.clickIndex = index
-   
+      
       this.$emit('toggleObj',item)
     }
   },
