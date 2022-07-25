@@ -11,21 +11,16 @@
     </div>
     <p class="title">最新音乐</p>
     <div style="margin-bottom:48px">
-      <van-cell
-      v-for="(item, index) in newList"
-      :key="index"
-      :title="item.name"
-      :label="`${item.song.artists[0].name}-${item.name}`"
-    >
-      <template #right-icon>
-        <van-icon name="play-circle-o" size="0.6rem" />
-      </template>
-    </van-cell>
+    <SingItem v-for="(item, index) in newList" :key="index"
+      :name="item.name"
+      :ahouter="`${item.song.artists[0].name}-${item.name}`"
+    ></SingItem>
     </div>
   </div>
 </template>
 
 <script>
+import SingItem from '@/components/singItem.vue'
 import { renMusicApi, newMusicApi } from "@/api";
 export default {
   name: "Home",
@@ -34,6 +29,9 @@ export default {
       list: [],
       newList: [],
     };
+  },
+  components:{
+    SingItem
   },
   mounted() {
     this.getList();

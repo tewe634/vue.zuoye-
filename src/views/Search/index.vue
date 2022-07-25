@@ -7,7 +7,7 @@
         @input="inputFn"
       />
     </div>
-    <div class="search_wrap">
+    <div class="search_wrap" v-if="resultList.length == 0">
       <!-- 标题 -->
       <p class="hot_title">热门搜索</p>
       <!-- 热搜关键词容器 -->
@@ -23,21 +23,26 @@
       </div>
     </div>
     <!-- 搜索结果 -->
-    <div class="search_wrap">
+    <div class="search_wrap" style="margin-bottom: 45px" v-else>
       <van-list
+        v-model="loading"
+        :finished="finished"
         finished-text="没有更多了"
+        @load="onLoad"
       >
-        <van-cell v-for="item in resultList" :key="item.id" :title="item.name" :label="`${item.ar[0].name}-${item.name}`" >
-        <template #right-icon>
-            <van-icon name="play-circle-o" size="0.6rem" />
-          </template>
-        </van-cell>
+        <SingItem v-for="item in resultList" 
+        :key="item.id" 
+        :name="item.name"
+        :id="item.id"
+        :ahouter="`${item.ar[0].name}-${item.name}`"
+        ></SingItem>
       </van-list>
     </div>
   </div>
 </template>
 
 <script>
+import SingItem from '@/components/singItem.vue'
 import { hotListApi, searchResultApi } from "@/api";
 export default {
   name: "search",
@@ -46,7 +51,15 @@ export default {
       value: "",
       hotArr: [],
       resultList: [],
+      loading: false,
+      finished: false,
+      page: 1,
+      limit: 20,
+      timer:null
     };
+  },
+  components:{
+    SingItem
   },
   methods: {
     async getList() {
@@ -61,19 +74,54 @@ export default {
       try {
         const res = await searchResultApi({
           keywords: this.value,
-          limit: 20,
+          limit: this.limit,
+          offset: (this.page - 1) * this.limit,
         });
-        return res.data.result?.songs || [];
+        return res.data.result;
       } catch (error) {
         console.log(error.message);
       }
     },
+    // 点击
     async fn(val) {
-      this.value = val;
-      this.resultList = await this.searchList();
+      this.finished = true;
+      this.loading = false;
+      try {
+        this.value = val;
+        const res = await this.searchList();
+        this.resultList = res?.songs || [];
+      } catch (error) {
+        console.log(error.message);
+      }
     },
+    // ipt输入
     async inputFn() {
-      this.resultList = await this.searchList();
+    if (this.timer) {
+      clearTimeout(this.timer)
+    }
+    this.timer = setTimeout(async() =>{
+       this.finished = true;
+      this.loading = false;
+      try {
+        const res = await this.searchList();
+        this.resultList = (res && res.songs) || [];
+      } catch (error) {
+        console.log(error.message);
+      }
+     },1000)
+    },
+    async onLoad() {
+      setTimeout(async () => {
+        this.page++;
+        const res = await this.searchList();
+        if (!res.songs) {
+          this.finished = true;
+          this.loading = false;
+          return;
+        }
+        this.resultList = [...this.resultList, ...(res.songs || [])];
+        this.loading = false;
+      }, 500);
     },
   },
   mounted() {
